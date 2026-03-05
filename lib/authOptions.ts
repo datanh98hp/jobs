@@ -17,7 +17,7 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
-        // console.log("credentials check  from credentials: ", credentials);
+        console.log("credentials check  from credentials: ", credentials);
         if (
           credentials?.email.trim() === "" ||
           credentials?.password.trim() === ""
