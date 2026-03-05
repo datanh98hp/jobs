@@ -34,7 +34,7 @@ const signUpAction = async (input: RegisterInput) => {
             style: { color: "red" },
           });
         }
-        throw new Error("Failed to register user");
+        return reg.json();
       }
     },
     successMessage: "Signed up successfully",

@@ -9,23 +9,23 @@ const executeAction = async <T>({
   actionFn,
   successMessage = "The actions was successful",
 }: Options<T>): Promise<{ success: boolean; message: string }> => {
-  // try {
+  try {
     await actionFn();
 
     return {
       success: true,
       message: successMessage,
     };
-  // } catch (error) {
-  //   if (isRedirectError(error)) {
-  //     throw error;
-  //   }
+  } catch (error) {
+    if (isRedirectError(error)) {
+      throw error;
+    }
 
-  //   return {
-  //     success: false,
-  //     message: "An error has occurred during executing the action",
-  //   };
-  // }
+    return {
+      success: false,
+      message: "An error has occurred during executing the action",
+    };
+  }
 };
 
 export { executeAction };
