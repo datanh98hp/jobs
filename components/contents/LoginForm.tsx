@@ -21,7 +21,7 @@ export function LoginForm() {
         redirect: false,
         // callbackUrl: "/",
       });
-      console.log("res login form: ", res?.ok);
+      console.log("res login form: ", res);
       if (!res?.ok) {
         setError(res?.error ?? "Login failed");
         toast.error("Wrong email or password", {
