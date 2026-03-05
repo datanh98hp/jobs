@@ -1,11 +1,5 @@
 {
-  "scripts": {
-    "postinstall": "prisma generate",
-    "build": "prisma generate && next build",
-    "dev": "next dev",
-    "start": "next start",
-    "lint": "eslint"
-  },
+  "buildCommand": "prisma generate && next build",
   "env": {
     "PRISMA_CLI_BINARY_TARGETS": "rhel-openssl-3.0.x"
   }
