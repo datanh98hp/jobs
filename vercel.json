@@ -1,5 +1,5 @@
 {
-  "buildCommand": "bash -lc \"rm -rf node_modules/.prisma/client && npx prisma generate && next build\"",
+  "buildCommand": "prisma generate && next build",
   "env": {
     "PRISMA_CLI_BINARY_TARGETS": "rhel-openssl-3.0.x"
   }
