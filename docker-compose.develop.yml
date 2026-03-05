@@ -1,0 +1,25 @@
+version: '3.9'
+
+# Development-specific overrides
+services:
+  app:
+    build:
+      target: development
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      NODE_ENV: development
+      DEBUG: 'true'
+    ports:
+      - "3000:3000"
+      - "9230:9230" # Node debugger port
+    command: npm run dev
+
+  mongodb:
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_ADMIN_USER: admin
+      MONGO_ADMIN_PASSWORD: admin123

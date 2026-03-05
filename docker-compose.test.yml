@@ -1,0 +1,19 @@
+version: '3.9'
+
+# Testing-specific overrides
+services:
+  app:
+    build:
+      target: testing
+    environment:
+      NODE_ENV: test
+      DATABASE_URL: mongodb://admin:admin123@mongodb:27017/job_test_db?authSource=admin
+    ports:
+      - "3001:3000"
+    command: npm run dev
+
+  mongodb:
+    environment:
+      MONGO_INITDB_DATABASE: job_test_db
+    ports:
+      - "27018:27017"

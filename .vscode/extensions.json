@@ -1,0 +1,38 @@
+{
+  "recommendations": [
+    // React & Next.js Development
+    "dsznajder.es7-react-js-snippets",
+    "burkeholland.simple-react-snippets",
+
+    // TypeScript & JavaScript
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+
+    // Tailwind CSS
+    "bradlc.vscode-tailwindcss",
+
+    // Code Quality & Productivity
+    "streetsidesoftware.code-spell-checker",
+    "usernamehw.errorlens",
+    "christian-kohler.path-intellisense",
+    "christian-kohler.npm-intellisense",
+
+    // Git Integration
+    "eamodio.gitlens",
+
+    // File Icons & Theme
+    "pkief.material-icon-theme",
+
+    // Auto Import & IntelliSense
+    "steoates.autoimport",
+    "visualstudioexptteam.vscodeintellicode",
+
+    // Component Development
+    "formulahendry.auto-rename-tag",
+    "formulahendry.auto-close-tag",
+
+    // Console & Debugging
+    "wix.vscode-import-cost",
+    "chakrounanas.turbo-console-log"
+  ]
+}
