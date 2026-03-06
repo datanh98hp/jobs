@@ -45,6 +45,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { mutate } from "swr";
+import { PutBlobResult } from "@vercel/blob";
 
 export interface ProductData {
   id: string;
@@ -168,7 +169,7 @@ export const columns: ColumnDef<ProductData>[] = [
           "https://cdn.dribbble.com/userupload/46006494/file/2cd0434a1ba82e4214f01753182f4527.png?resize=1024x768&vertical=center",
       );
       const [open, setOpen] = useState(false);
-
+      const [blob, setBlob] = useState<PutBlobResult | null>(null);
       const formSchema = z.object({
         name: z
           .string()
@@ -182,7 +183,8 @@ export const columns: ColumnDef<ProductData>[] = [
           })
           .refine((value) => value !== null, {
             message: "Please select a category.",
-          }).required(),
+          })
+          .required(),
         price: z.string().refine((value) => {
           const num = Number(value);
           return !Number.isNaN(num) && num > 0;
@@ -489,8 +491,20 @@ export const columns: ColumnDef<ProductData>[] = [
 
                                   // Upload file to server
                                   try {
-                                    const filePath =
-                                      await uploadFileToServer(file);
+                                    // const filePath =
+                                    //   await uploadFileToServer(file);
+                                    const response = await fetch(
+                                      `/api/blob/upload?filename=${file.name}`,
+                                      {
+                                        method: "POST",
+                                        body: file,
+                                      },
+                                    );
+                                    const newBlob =
+                                      (await response.json()) as PutBlobResult;
+
+                                    setBlob(newBlob);
+                                    const filePath = newBlob.url;
                                     field.onChange(filePath);
                                   } catch (error) {
                                     toast.error(

@@ -27,7 +27,7 @@ import { mutate } from "swr";
 import Image from "next/image";
 import z from "zod";
 import { Button } from "@/components/ui/button";
-
+import type { PutBlobResult } from "@vercel/blob";
 export default function FormAddProduct() {
   const { categories, isLoading } = useCategories();
   const [thumbnailPreview, setThumbnailPreview] = useState<string>(
@@ -46,7 +46,8 @@ export default function FormAddProduct() {
       })
       .refine((value) => value !== null, {
         message: "Please select a category.",
-      }).required(),
+      })
+      .required(),
     price: z.string().refine((value) => {
       const num = Number(value);
       return !Number.isNaN(num) && num > 0;
@@ -111,6 +112,10 @@ export default function FormAddProduct() {
       );
     }
   };
+
+  //
+  const [blob, setBlob] = useState<PutBlobResult | null>(null);
+
   return (
     <div>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -302,11 +307,25 @@ export default function FormAddProduct() {
                             const result = reader.result as string;
                             setThumbnailPreview(result);
                           };
+
                           reader.readAsDataURL(file);
 
                           // Upload file to server
                           try {
-                            const filePath = await uploadFileToServer(file);
+                            //const filePath = await uploadFileToServer(file);
+                            const response = await fetch(
+                              `/api/blob/upload?filename=${file.name}`,
+                              {
+                                method: "POST",
+                                body: file,
+                              },
+                            );
+                            const newBlob =
+                              (await response.json()) as PutBlobResult;
+
+                            setBlob(newBlob);
+                            const filePath = newBlob.url;
+
                             field.onChange(filePath);
                           } catch (error) {
                             toast.error(

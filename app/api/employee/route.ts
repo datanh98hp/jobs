@@ -8,7 +8,7 @@ function serializeData(obj: any): any {
       if (typeof v === "bigint") return v.toString();
       if (v instanceof Date) return v.toISOString();
       return v;
-    })
+    }),
   );
 }
 
@@ -40,7 +40,7 @@ export async function GET(request: Request) {
       sortDirection,
     } as FilterEmployee);
     const data = serializeData(res);
-   // console.log("data route", data);
+    // console.log("data route", data);
     return Response.json(data);
   } catch (error) {
     console.error("Employee API error:", error);
