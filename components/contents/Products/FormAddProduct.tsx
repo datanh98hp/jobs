@@ -103,7 +103,7 @@ export default function FormAddProduct() {
       );
       form.reset();
       setThumbnailPreview(
-        "https://cdn.dribbble.com/userupload/46006494/file/2cd0434a1ba82e4214f01753182f4527.png?resize=1024x768&vertical=center",
+        "/thumnail.png",
       );
     } catch (error) {
       console.error("Submit error:", error);
