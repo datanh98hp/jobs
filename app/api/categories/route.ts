@@ -48,7 +48,7 @@ export async function GET(request: Request) {
     const data = serializeData(res);
     return Response.json(data);
   } catch (error) {
-    return Response.json({ error, status: 500 });
+    return Response.json({ error: String(error) }, { status: 500 });
   }
 }
 

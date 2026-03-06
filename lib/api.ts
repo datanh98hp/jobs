@@ -2,16 +2,16 @@ import { cache } from "react";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const base_url = process.env.NEXT_PUBLIC_BASE_URL;
+
 const base_api = `${base_url}/api`;
 
 class Api<T = any> {
   getList = cache(async function (path: string) {
-    const res = fetch(`${base_api}/${path}`);
-    // console.log("--log api", res);
+    const res = await fetch(`${base_api}/${path}`);
     return res;
   });
-  getById(path: string) {
-    const res = fetch(`${base_api}/${path}`, {
+  async getById(path: string) {
+    const res = await fetch(`${base_api}/${path}`, {
       method: "GET",
     });
     return res;
@@ -19,8 +19,8 @@ class Api<T = any> {
 
   // `data` is optional so callers can instantiate `new Api()` without specifying `T`,
   // or call `createNew()` without a payload when the endpoint doesn't require one.
-  createNew(data?: T, path = "") {
-    const res = fetch(`${base_api}/${path}`, {
+  async createNew(data?: T, path = "") {
+    const res = await fetch(`${base_api}/${path}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,8 +31,8 @@ class Api<T = any> {
     return res;
   }
 
-  updateById(id: string, data: T, path: string) {
-    const res = fetch(`${base_api}/${path}/${id}`, {
+  async updateById(id: string, data: T, path: string) {
+    const res = await fetch(`${base_api}/${path}/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -43,8 +43,8 @@ class Api<T = any> {
     return res;
   }
 
-  delete(ids: string[], path: string) {
-    const res = fetch(`${base_api}/${path}`, {
+  async delete(ids: string[], path: string) {
+    const res = await fetch(`${base_api}/${path}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

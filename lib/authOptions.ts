@@ -1,6 +1,6 @@
 import { NextAuthOptions } from "next-auth";
 // import GoogleProvider from "next-auth/providers/google";
-import { PrismaAdapter } from "@auth/prisma-adapter"
+import { PrismaAdapter } from "@auth/prisma-adapter";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "@/lib/prisma";
 export const authOptions: NextAuthOptions = {
@@ -27,7 +27,7 @@ export const authOptions: NextAuthOptions = {
         //console.log("email check  : ", email);
         //console.log("process.env.API_URL", process.env.API_URL);
         //console.log("API_URL", process.env.API_URL);
-        const res = await fetch(`${process.env.API_URL}/login`, {
+        const res = await fetch(`http://localhost:3000/api/login`, {
           method: "POST",
           body: JSON.stringify({
             email: credentials?.email,
@@ -36,10 +36,11 @@ export const authOptions: NextAuthOptions = {
           headers: { "Content-Type": "application/json" },
         });
         //console.log("credentials check res: ", res);
-        const user = await res.json();
-      
-        if (!user.error) {
-          //console.log("credentials check user: ", user);
+
+        if (res.ok) {
+          const user = await res.json();
+          console.log("credentials check user: ", user);
+
           return user;
         }
         // console.log("credentials check  user error: ", user);

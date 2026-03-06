@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/purity */
 "use client";
 
 import {
@@ -49,7 +50,6 @@ export const description = "A bar chart with a custom label";
 //   },
 // } satisfies ChartConfig;
 
-
 export default function ChartBarTopEmployee({
   data,
   config,
@@ -57,6 +57,7 @@ export default function ChartBarTopEmployee({
   data: [];
   config: ChartConfig;
 }) {
+  const chartId = "chart-" + Math.random().toString(36).substring(2, 10);
   return (
     <Card className="h-fit">
       <CardHeader>
@@ -64,53 +65,61 @@ export default function ChartBarTopEmployee({
         <CardDescription>Update to your last month</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={config}>
-          <BarChart
-            accessibilityLayer
-            data={data}
-            layout="vertical"
-            margin={{
-              right: 16,
-            }}
-          >
-            <CartesianGrid horizontal={false} />
-            <YAxis
-              dataKey="label"
-              type="category"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
-              hide
-            />
-            <XAxis dataKey="salary" type="number" />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="line" />}
-            />
-            <Bar
-              dataKey="salary"
+        {/* <div
+          data-slot="chart"
+          data-chart={chartId}
+          className={
+            "[&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-c..."
+          }
+        > */}
+          <ChartContainer config={config}>
+            <BarChart
+              accessibilityLayer
+              data={data}
               layout="vertical"
-              fill="var(--color-desktop)"
-              radius={4}
+              margin={{
+                right: 16,
+              }}
             >
-              <LabelList
+              <CartesianGrid horizontal={false} />
+              <YAxis
                 dataKey="label"
-                position="insideLeft"
-                offset={8}
-                className="fill-(--color-label)"
-                fontSize={12}
+                type="category"
+                tickLine={false}
+                tickMargin={10}
+                axisLine={false}
+                tickFormatter={(value) => value.slice(0, 3)}
+                hide
               />
-              <LabelList
+              <XAxis dataKey="salary" type="number" />
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent indicator="line" />}
+              />
+              <Bar
                 dataKey="salary"
-                position="right"
-                offset={8}
-                className="fill-foreground"
-                fontSize={12}
-              />
-            </Bar>
-          </BarChart>
-        </ChartContainer>
+                layout="vertical"
+                fill="var(--color-desktop)"
+                radius={4}
+              >
+                <LabelList
+                  dataKey="label"
+                  position="insideLeft"
+                  offset={8}
+                  className="fill-(--color-label)"
+                  fontSize={12}
+                />
+                <LabelList
+                  dataKey="salary"
+                  position="right"
+                  offset={8}
+                  className="fill-foreground"
+                  fontSize={12}
+                />
+              </Bar>
+            </BarChart>
+          </ChartContainer>
+        {/* </div> */}
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         {/* <div className="flex gap-2 leading-none font-medium">

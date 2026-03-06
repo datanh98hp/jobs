@@ -1,5 +1,12 @@
 "use client";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
@@ -95,6 +102,8 @@ export const OverviewProductCard = () => {
       { revalidate: true },
     );
   };
+  // eslint-disable-next-line react-hooks/purity
+  const chartId = "chart-" + Math.random().toString(36).substring(2, 10);
   return (
     <div className="h-fit">
       <div className="w-full  md:grid grid-cols-4 gap-4 my-4 ">
@@ -186,30 +195,38 @@ export const OverviewProductCard = () => {
           <CardDescription></CardDescription>
         </CardHeader>
         <CardContent>
-          <ChartContainer config={chartConfig}>
-            <BarChart accessibilityLayer data={dataChart()}>
-              <CartesianGrid vertical={false} />
-              <XAxis
-                dataKey="title"
-                tickLine={false}
-                tickMargin={4}
-                axisLine={false}
-                tickFormatter={(value) => value.length > 15 ? `${value.slice(0, 10)}...` : value}
-                angle={-90}
-                textAnchor="end"
-                height={80}
-              />
-              <ChartTooltip
-                cursor={true}
-                content={<ChartTooltipContent hideLabel />}
-              />
-              <Bar dataKey="count" fill="var(--color-chart-1)" radius={10} />
-            </BarChart>
-          </ChartContainer>
+          {/* <div
+            data-slot="chart"
+            data-chart={chartId}
+            className={
+              "[&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-c..."
+            }
+          > */}
+            <ChartContainer config={chartConfig}>
+              <BarChart accessibilityLayer data={dataChart()}>
+                <CartesianGrid vertical={false} />
+                <XAxis
+                  dataKey="title"
+                  tickLine={false}
+                  tickMargin={4}
+                  axisLine={false}
+                  tickFormatter={(value) =>
+                    value.length > 15 ? `${value.slice(0, 10)}...` : value
+                  }
+                  angle={-90}
+                  textAnchor="end"
+                  height={80}
+                />
+                <ChartTooltip
+                  cursor={true}
+                  content={<ChartTooltipContent hideLabel />}
+                />
+                <Bar dataKey="count" fill="var(--color-chart-1)" radius={10} />
+              </BarChart>
+            </ChartContainer>
+          {/* </div> */}
         </CardContent>
-        <CardFooter className="flex-col items-start gap-2 text-sm">
-          
-        </CardFooter>
+        <CardFooter className="flex-col items-start gap-2 text-sm"></CardFooter>
       </Card>
     </div>
   );

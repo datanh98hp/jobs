@@ -1,4 +1,4 @@
-import ChartBarTopEmployee from "@/components/contents/TopEmployeeChart";
+import ChartBarTopEmployee from "@/components/contents/Employee/TopEmployeeChart";
 import { ChartConfig } from "@/components/ui/chart";
 import { getListEmployee } from "@/lib/data";
 
@@ -12,7 +12,7 @@ export default async function Page() {
   })) as Promise<{ list: []; total: number; totalPage: number }>);
   /// chart
   const chartData =
-    data?.list.map((item: { name: string; salary: number }) => {
+    data?.list?.map((item: { name: string; salary: number }) => {
       return {
         label: item.name,
         salary: item.salary,
@@ -25,6 +25,7 @@ export default async function Page() {
       color: "var(--chart-3)",
     },
   } satisfies ChartConfig;
+  
   return (
     <div className="bg-muted/50 rounded-xl md:min-h-min">
       {/* <div>iad</div> */}

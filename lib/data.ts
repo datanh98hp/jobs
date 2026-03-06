@@ -8,13 +8,16 @@ export async function getListEmployee(filter: FilterEmployee) {
   const { page = 1, pageSize = 10, search, sortBy, sortDirection } = filter;
   const response = await api.getList(
     `employee?sortBy=${sortBy}&page=${page}&pageSize=${pageSize}&sortDirection=${sortDirection}&search=${search}`,
-    // );
   );
-
-  if (!response.ok) {
-    const text = await response.text();
-    throw new Error(`API error: ${response.status} ${response.statusText} - ${text}`);
-  }
+  // if (!response.ok) {
+  //   const text = await response.text();
+  //   // throw new Error(
+  //   //   `API error: ${response.status} ${response.statusText} - ${text}`,
+  //   // );
+  //   return {
+  //     error: `API error: ${response.status} ${response.statusText} - ${text}`,
+  //   };
+  // }
 
   return response.json();
 }
@@ -27,10 +30,7 @@ export async function getProducts(filter: FilterProduct) {
     // );
   );
 
-  if (!response.ok) {
-    const text = await response.text();
-    throw new Error(`API error: ${response.status} ${response.statusText} - ${text}`);
-  }
+ 
 
   return response.json();
 }
@@ -43,28 +43,19 @@ export async function getCategories(filter: FilterCategory) {
     // );
   );
 
-  if (!response.ok) {
-    const text = await response.text();
-    throw new Error(`API error: ${response.status} ${response.statusText} - ${text}`);
-  }
+  
 
   return response.json();
 }
 
 export async function getProductOverview() {
   const response = await api.overview();
-  if (!response.ok) {
-    const text = await response.text();
-    throw new Error(`API error: ${response.status} ${response.statusText} - ${text}`);
-  }
+  
   return response.json();
 }
 
 export async function getProductDataChart(filter: ProductOverviewDataRequest) {
   const response = await api.chartData(filter);
-  if (!response.ok) {
-    const text = await response.text();
-    throw new Error(`API error: ${response.status} ${response.statusText} - ${text}`);
-  }
+  
   return response.json();
 }

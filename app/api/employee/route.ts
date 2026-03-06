@@ -19,7 +19,8 @@ export async function POST(request: Request) {
 
     return Response.json({ message: "success", status: 201 });
   } catch (error) {
-    return Response.json({ error, status: 500 });
+    console.error("Employee creation error:", error);
+    return Response.json({ error: String(error) }, { status: 500 });
   }
 }
 
@@ -39,9 +40,11 @@ export async function GET(request: Request) {
       sortDirection,
     } as FilterEmployee);
     const data = serializeData(res);
+   // console.log("data route", data);
     return Response.json(data);
   } catch (error) {
-    return Response.json({ error, status: 500 });
+    console.error("Employee API error:", error);
+    return Response.json({ error: String(error) }, { status: 500 });
   }
 }
 
@@ -52,6 +55,7 @@ export async function DELETE(request: Request) {
     await employee.deleteByList(ids);
     return Response.json({ message: "success", status: 200 });
   } catch (error) {
-    return Response.json({ error, status: 500 });
+    console.error("Employee deletion error:", error);
+    return Response.json({ error: String(error) }, { status: 500 });
   }
 }

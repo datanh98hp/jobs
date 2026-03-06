@@ -8,19 +8,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Employee } from "@/generated/prisma/client";
 import { getListEmployee } from "@/lib/data";
 import { useState } from "react";
 import useSWR, { mutate } from "swr";
 
 
-import clsx from "clsx";
-import swrConfig from "@/lib/swr-config";
-import { Spinner } from "@/components/ui/spinner";
-import { DataTable } from "@/components/contents/Employee/Datatable/data-table";
-import { Pagination, PaginationContent, PaginationItem } from "@/components/ui/pagination";
-import { Button } from "@/components/ui/button";
 import { columns } from "@/components/contents/Employee/Datatable/columns";
+import { DataTable } from "@/components/contents/Employee/Datatable/data-table";
+import { Button } from "@/components/ui/button";
+import { Pagination, PaginationContent, PaginationItem } from "@/components/ui/pagination";
+import { Spinner } from "@/components/ui/spinner";
+import swrConfig from "@/lib/swr-config";
+import clsx from "clsx";
 export function LoadingTable() {
   return (
     <Table className="min-w-full">
@@ -70,6 +69,8 @@ export default function ListEmployee() {
   // handle pagination
   const [pageCurrent, setPageCurrent] = useState(1);
   const [numOfPage, setNumOfPage] = useState(10);
+
+  // console.log("env url", process.env.NEXT_PUBLIC_BASE_URL);
 
   const { data, isLoading } = useSWR(
     "/employee",

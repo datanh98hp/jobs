@@ -11,7 +11,7 @@ import clsx from "clsx";
 import useSWR from "swr";
 import { getListEmployee } from "@/lib/data";
 import swrConfig from "@/lib/swr-config";
-import ChartBarTopEmployee from "../TopEmployeeChart";
+import ChartBarTopEmployee from "./TopEmployeeChart";
 import { ChartConfig } from "../../ui/chart";
 
 export default function CardInf({
