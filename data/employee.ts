@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { prisma } from "@/lib/prisma";
 import { serializeData } from "@/lib/serializer";
+import type { Employee } from "@/generated/prisma";
 
 export interface EmployeeCreate {
   firstName: string;
@@ -340,22 +342,22 @@ const updateById = async (id: string, data: EmployeeUpdate) => {
 };
 const deleteById = async (id: string) => {
   //del user by id
-  await prisma.employee
+  return await prisma.employee
     .delete({
       where: {
         id: id,
       },
     })
-    .then((data) => {
+    .then((data: Employee) => {
       return data;
     })
-    .catch((error) => {
+    .catch((error: any) => {
       return error;
     });
 };
 
 const deleteByList = async (ids: string[]) => {
-  await prisma.employee
+  return await prisma.employee
     .deleteMany({
       where: {
         id: {
@@ -363,10 +365,10 @@ const deleteByList = async (ids: string[]) => {
         },
       },
     })
-    .then((data) => {
+    .then((data: { count: number }) => {
       return data;
     })
-    .catch((error) => {
+    .catch((error: any) => {
       return error;
     });
 };

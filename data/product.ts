@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import fs from "fs";
 import { join } from "path";
+import type { Product, Category } from "@/generated/prisma";
 
 export interface FilterProduct {
   page?: number;
@@ -224,16 +225,16 @@ const deleteById = async (id: string) => {
   safeDeleteFile(thumbnail);
 
   //del user by id
-  await prisma.product
+  return await prisma.product
     .delete({
       where: {
         id: id,
       },
     })
-    .then((data) => {
+    .then((data: Product) => {
       return data;
     })
-    .catch((error) => {
+    .catch((error: any) => {
       return error;
     });
 };
@@ -325,14 +326,14 @@ const getCountProductFromCategory = async (
         },
       },
     })
-    .then((data) => {
+    .then((data: (Category & { _count: { products: number } })[]) => {
       return data.map((item) => ({
         id: item.id,
         name: item.title,
         count: item._count.products,
       }));
     })
-    .catch((error) => {
+    .catch((error: any) => {
       return error;
     });
 

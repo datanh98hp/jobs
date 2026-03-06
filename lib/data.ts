@@ -6,43 +6,65 @@ import Api from "./api";
 const api = new Api();
 export async function getListEmployee(filter: FilterEmployee) {
   const { page = 1, pageSize = 10, search, sortBy, sortDirection } = filter;
-
-  const data = await api.getList(
+  const response = await api.getList(
     `employee?sortBy=${sortBy}&page=${page}&pageSize=${pageSize}&sortDirection=${sortDirection}&search=${search}`,
     // );
   );
 
-  return data.json();
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`API error: ${response.status} ${response.statusText} - ${text}`);
+  }
+
+  return response.json();
 }
 
 export async function getProducts(filter: FilterProduct) {
   const { page = 1, pageSize = 10, search, sortBy, sortDirection } = filter;
 
-  const data = await api.getList(
+  const response = await api.getList(
     `products?sortBy=${sortBy}&page=${page}&pageSize=${pageSize}&sortDirection=${sortDirection}&search=${search}`,
     // );
   );
 
-  return data.json();
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`API error: ${response.status} ${response.statusText} - ${text}`);
+  }
+
+  return response.json();
 }
 
 export async function getCategories(filter: FilterCategory) {
   const { page = 1, pageSize = 10, search, sortBy, sortDirection } = filter;
 
-  const data = await api.getList(
+  const response = await api.getList(
     `categories?sortBy=${sortBy}&page=${page}&pageSize=${pageSize}&sortDirection=${sortDirection}&search=${search}`,
     // );
   );
 
-  return data.json();
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`API error: ${response.status} ${response.statusText} - ${text}`);
+  }
+
+  return response.json();
 }
 
 export async function getProductOverview() {
-  const data = await api.overview();
-  return data.json();
+  const response = await api.overview();
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`API error: ${response.status} ${response.statusText} - ${text}`);
+  }
+  return response.json();
 }
 
 export async function getProductDataChart(filter: ProductOverviewDataRequest) {
-  const data = await api.chartData(filter);
-  return data.json();
+  const response = await api.chartData(filter);
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`API error: ${response.status} ${response.statusText} - ${text}`);
+  }
+  return response.json();
 }
