@@ -17,7 +17,7 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
-        console.log("credentials check  from credentials: ", credentials);
+        // console.log("credentials check  from credentials: ", credentials);
         if (
           credentials?.email.trim() === "" ||
           credentials?.password.trim() === ""
@@ -27,7 +27,7 @@ export const authOptions: NextAuthOptions = {
         //console.log("email check  : ", email);
         //console.log("process.env.API_URL", process.env.API_URL);
         //console.log("API_URL", process.env.API_URL);
-        const res = await fetch(`http://localhost:3000/api/login`, {
+        const res = await fetch(`${process.env.API_URL}/api/login`, {
           method: "POST",
           body: JSON.stringify({
             email: credentials?.email,
@@ -39,7 +39,7 @@ export const authOptions: NextAuthOptions = {
 
         if (res.ok) {
           const user = await res.json();
-          console.log("credentials check user: ", user);
+          //console.log("credentials check user: ", user);
 
           return user;
         }
