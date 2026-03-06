@@ -68,3 +68,7 @@ export async function uploadImageThumbnail(file: File): Promise<string> {
   return uploadFileToServer(file, "thumbnail");
 }
 
+export async function upload(file: File): Promise<string> {
+  validateImageFile(file); // Validate: image file
+  return uploadFileToServer(file);
+}

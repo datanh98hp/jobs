@@ -241,7 +241,7 @@ const deleteById = async (id: string) => {
 };
 
 const deleteByList = async (ids: string[]) => {
-  console.log("ids----", ids);
+  //console.log("ids----", ids);
   // delete media thumnail before
   const items = await prisma.product.findMany({
     where: {

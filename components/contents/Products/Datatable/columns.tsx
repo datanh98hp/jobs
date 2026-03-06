@@ -166,7 +166,7 @@ export const columns: ColumnDef<ProductData>[] = [
 
       const [thumbnailPreview, setThumbnailPreview] = useState<string>(
         product?.thumbnail ||
-          "https://cdn.dribbble.com/userupload/46006494/file/2cd0434a1ba82e4214f01753182f4527.png?resize=1024x768&vertical=center",
+          "/thumnail.png",
       );
       const [open, setOpen] = useState(false);
       const [blob, setBlob] = useState<PutBlobResult | null>(null);
@@ -488,11 +488,25 @@ export const columns: ColumnDef<ProductData>[] = [
                                     setThumbnailPreview(result);
                                   };
                                   reader.readAsDataURL(file);
-
                                   // Upload file to server
                                   try {
                                     // const filePath =
                                     //   await uploadFileToServer(file);
+                                    //handle delete file exist on server
+                                    if (product?.thumbnail) {
+                                      const resDel = await fetch(
+                                        `/api/blob/delete?url=${product?.thumbnail}`,
+                                        {
+                                          method: "DELETE",
+                                        },
+                                      );
+                                      if (!resDel.ok) {
+                                        toast.error("Failed to update file");
+                                        return;
+                                      }
+                                    }
+
+                                    // handle file upload
                                     const response = await fetch(
                                       `/api/blob/upload?filename=${file.name}`,
                                       {
@@ -512,10 +526,12 @@ export const columns: ColumnDef<ProductData>[] = [
                                         ? error.message
                                         : "Failed to upload file",
                                     );
+
+
                                     // Revert preview on upload error
                                     setThumbnailPreview(
                                       product?.thumbnail ||
-                                        "https://cdn.dribbble.com/userupload/46006494/file/2cd0434a1ba82e4214f01753182f4527.png?resize=1024x768&vertical=center",
+                                        "/thumnail.png",
                                     );
                                   }
                                 }

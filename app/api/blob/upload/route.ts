@@ -1,10 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { put } from "@vercel/blob";
+import { put,del } from "@vercel/blob";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request): Promise<NextResponse> {
   const { searchParams } = new URL(request.url);
   const filename = searchParams.get("filename") || "";
+
+  if (!filename) {
+    return NextResponse.json({ error: "Missing filename" }, { status: 400 });
+  }
 
   const ext = filename.split(".").pop()?.split("?")[0];
   const fileName = Date.now() + "-" + filename.split("/").pop()?.split("?")[0];
@@ -27,3 +31,11 @@ export async function POST(request: Request): Promise<NextResponse> {
 //     bodyParser: false,
 //   },
 // };
+ 
+export async function DELETE(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const urlToDelete = searchParams.get('url') as string;
+  await del(urlToDelete);
+ 
+  return new Response();
+}

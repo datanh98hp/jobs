@@ -31,7 +31,7 @@ import type { PutBlobResult } from "@vercel/blob";
 export default function FormAddProduct() {
   const { categories, isLoading } = useCategories();
   const [thumbnailPreview, setThumbnailPreview] = useState<string>(
-    "https://cdn.dribbble.com/userupload/46006494/file/2cd0434a1ba82e4214f01753182f4527.png?resize=1024x768&vertical=center",
+    "/thumnail.png",
   );
   const formSchema = z.object({
     name: z
